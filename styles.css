@@ -1,8 +1,9 @@
 .parent {
+	height: 100%;
 	display: flex;
 	flex-direction: row;
 }
 
-/* .chart {
+.chart {
 	border: 1px solid black;
-} */
+}
