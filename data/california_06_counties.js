@@ -1,4 +1,4 @@
-export const countyJson = {
+const ca = {
   type: "Topology",
   transform: {
     scale: [0.0017671886290226235, 0.0012462649877817626],
