@@ -22,10 +22,10 @@ const chartDims = {
     innerHeight: height - headerHeight - margins.top - margins.bottom,
   },
   bar: {
-    width: width / 2,
-    height: height / 2 - headerHeight / 2,
-    innerWidth: width / 2 - margins.left - margins.right,
-    innerHeight: height / 2 - headerHeight / 2 - margins.top - margins.bottom,
+    width: width,
+    height: height,
+    innerWidth: width - margins.left - margins.right,
+    innerHeight: height - headerHeight - margins.top - margins.bottom,
   },
   scatter: {
     width: width / 2,
@@ -125,6 +125,117 @@ d3.csv("data/calenviroscreen.csv").then((rawData) => {
     .attr("fill", (d) => color(chloroplethData.get(d.properties.GEOID)));
   // .on("mouseover", mouseover)
   // .on("mouseout", mouseout);
+
+
+
+
+  // Select the bar-svg
+  const barSvg = d3
+    .selectAll("#bar-svg")
+    .append("g")
+    .attr("width", chartDims.bar.width)
+    .attr("height", chartDims.bar.height);
+
+  // Reduce data to Type_1 frequencies
+  const barData = Array.from(
+    d3.rollup(
+      rawData,
+      (v) => d3.mean(v, (d) => d.Pollution_Burden),
+      (d) => d.county,
+    ),
+    ([county, Pollution_Burden]) => ({ county, Pollution_Burden }),
+  );
+
+  // Plot Title
+  barSvg
+    .append("text")
+    .attr("x", chartDims.bar.width / 2)
+    .attr("y", margins.top - 20)
+    .attr("text-anchor", "middle")
+    .style("font-size", "20px")
+    .style("font-weight", "bold")
+    .text("Counties vs Average Pollution Burden");
+
+  // Create x and y axis
+
+  // Compute x axis
+  const barX1 = d3
+    .scaleBand()
+    .domain(barData.map((d) => d.county))
+    .range([margins.left, margins.left + chartDims.bar.innerWidth])
+    .padding(0.08);
+
+  // Draw x axis
+  barSvg
+    .append("g")
+    .attr(
+      "transform",
+      `translate(${0}, ${margins.top + chartDims.bar.innerHeight})`,
+    )
+    .call(d3.axisBottom(barX1))
+    .selectAll("text")
+    .attr("transform", `translate(0, 0) rotate(0)`)
+    .attr("font-size", `0.6rem`)
+    .attr("text-anchor", "start")
+    .attr("transform", `translate(12, 8) rotate(75)`);
+    
+
+  // Label x axis
+  barSvg
+    .append("text")
+    .attr("x", chartDims.bar.width / 2)
+    .attr("y", chartDims.bar.height - 30)
+    .attr("font-size", "14px")
+    .attr("text-anchor", "middle")
+    .text("Counties");
+
+  // Compute y axis
+  const barY1 = d3
+    .scaleLinear()
+    .domain([0, (d3.max(barData, (d) => d.Pollution_Burden) / 25 + 1) * 25])
+    .range([margins.top + chartDims.bar.innerHeight, margins.top]);
+
+  // Draw y axis
+  barSvg
+    .append("g")
+    .attr("transform", `translate(${margins.left}, ${0})`)
+    .call(d3.axisLeft(barY1))
+    .selectAll("text")
+    .attr("transform", `translate(0, 0) rotate(0)`)
+    .attr("text-anchor", "end");
+
+  // Label y axis
+  barSvg
+    .append("text")
+    .attr(
+      "transform",
+      `translate(${margins.left - 30}, ${margins.top + chartDims.bar.innerHeight / 2}) rotate(-90)`,
+    )
+    .attr("text-anchor", "middle")
+    .attr("font-size", "14px")
+    .text("Average Pollution Burden");
+
+  // Draw bars
+  const rect = barSvg
+    .append("g")
+    .classed("mark", true)
+    .selectAll("rect")
+    .data(barData)
+    .join("rect")
+    .attr("class", "bars")
+    .attr("x", (d) => barX1(d.county))
+    .attr("y", (d) => barY1(d.Pollution_Burden))
+    .attr("width", barX1.bandwidth())
+    .attr(
+      "height",
+      (d) => margins.top + chartDims.bar.innerHeight - barY1(d.Pollution_Burden),
+    )
+    .style("fill", "#04787e")
+    .attr("stroke", "black")
+    .attr("stroke-width", 0.5);
+
+  // Bar tooltips
+  rect.append("title").text((d) => `County: ${d.county}\nPollution Burden: ${d.Pollution_Burden}`);
 });
 
 function zoom(s) {
