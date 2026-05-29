@@ -28,10 +28,10 @@ const chartDims = {
     innerHeight: height - headerHeight - margins.top - margins.bottom,
   },
   scatter: {
-    width: width / 2,
-    height: height / 2 - headerHeight / 2,
-    innerWidth: width / 2 - margins.left - margins.right,
-    innerHeight: height / 2 - headerHeight / 2 - margins.top - margins.bottom,
+    width: width,
+    height: height,
+    innerWidth: width - margins.left - margins.right,
+    innerHeight: height - headerHeight - margins.top - margins.bottom,
   },
 };
 
@@ -126,9 +126,6 @@ d3.csv("data/calenviroscreen.csv").then((rawData) => {
   // .on("mouseover", mouseover)
   // .on("mouseout", mouseout);
 
-
-
-
   // Select the bar-svg
   const barSvg = d3
     .selectAll("#bar-svg")
@@ -178,7 +175,6 @@ d3.csv("data/calenviroscreen.csv").then((rawData) => {
     .attr("font-size", `0.6rem`)
     .attr("text-anchor", "start")
     .attr("transform", `translate(12, 8) rotate(75)`);
-    
 
   // Label x axis
   barSvg
@@ -228,14 +224,124 @@ d3.csv("data/calenviroscreen.csv").then((rawData) => {
     .attr("width", barX1.bandwidth())
     .attr(
       "height",
-      (d) => margins.top + chartDims.bar.innerHeight - barY1(d.Pollution_Burden),
+      (d) =>
+        margins.top + chartDims.bar.innerHeight - barY1(d.Pollution_Burden),
     )
     .style("fill", "#04787e")
     .attr("stroke", "black")
     .attr("stroke-width", 0.5);
 
   // Bar tooltips
-  rect.append("title").text((d) => `County: ${d.county}\nPollution Burden: ${d.Pollution_Burden}`);
+  rect
+    .append("title")
+    .text(
+      (d) => `County: ${d.county}\nPollution Burden: ${d.Pollution_Burden}`,
+    );
+
+  // Scatter plots
+
+  // Select the scatter-svg
+  const scatterSvg = d3
+    .selectAll("#scatter-svg")
+    .append("g")
+    .attr("width", chartDims.scatter.width)
+    .attr("height", chartDims.scatter.height);
+
+  // Filter data attributes for scatterplot
+  const scatterData = rawData.map((d) => ({
+    Poverty: +d.Poverty,
+    Education: +d.Education,
+  }));
+
+  // Plot Title
+  scatterSvg
+    .append("text")
+    .attr("x", chartDims.scatter.width / 2)
+    .attr("y", margins.top - 20)
+    .attr("text-anchor", "middle")
+    .style("font-size", `20px`)
+    .style("font-weight", "bold")
+    .text("Poverty vs Education");
+
+  // Create x and y axis
+
+  // Compute x axis
+  const scatterX1 = d3
+    .scaleLinear()
+    .domain([0, d3.max(scatterData, (d) => d.Poverty)])
+    .range([margins.left, margins.left + chartDims.scatter.innerWidth]);
+
+  // Draw x axis
+  scatterSvg
+    .append("g")
+    .attr(
+      "transform",
+      `translate(${0}, ${margins.top + chartDims.scatter.innerHeight})`,
+    )
+    .call(d3.axisBottom(scatterX1))
+    .selectAll("text")
+    .attr("transform", `translate(0, 0) rotate(0)`)
+    .attr("text-anchor", "center");
+
+  // Label x axis
+  scatterSvg
+    .append("text")
+    .attr("x", chartDims.scatter.width / 2)
+    .attr("y", chartDims.scatter.height - 90)
+    .attr("font-size", "14px")
+    .attr("text-anchor", "middle")
+    .text("Poverty");
+
+  // Compute y axis
+  const scatterY1 = d3
+    .scaleLinear()
+    .domain([0, d3.max(scatterData, (d) => d.Education)])
+    .range([margins.top + chartDims.scatter.innerHeight, margins.top]);
+
+  // Draw y axis
+  scatterSvg
+    .append("g")
+    .attr("transform", `translate(${margins.left}, ${0})`)
+    .call(d3.axisLeft(scatterY1))
+    .selectAll("text")
+    .attr("transform", `translate(0, 0) rotate(0)`)
+    .attr("text-anchor", "end");
+
+  // Label y axis
+  scatterSvg
+    .append("text")
+    .attr(
+      "transform",
+      `translate(${margins.left - 30}, ${margins.top + chartDims.scatter.innerHeight / 2}) rotate(-90)`,
+    )
+    .attr("text-anchor", "middle")
+    .attr("font-size", "14px")
+    .text("Education");
+
+  // Draw circles
+  const r = 2;
+  const circles = scatterSvg
+    .append("g")
+    .classed("mark", true)
+    .selectAll("circle")
+    .data(scatterData)
+    .join("circle")
+    .classed("mark-circle", true)
+    .attr("cx", (d) => scatterX1(d.Poverty))
+    .attr("cy", (d) => scatterY1(d.Education))
+    .attr("r", (d) => r)
+    .style("fill", "#04787e")
+    .style("fill-opacity", 0.9)
+    .style("stroke", "black")
+    .style("stroke-width", 0.8);
+
+  // Circle tooltips
+  circles
+    .append("title")
+    .text(
+      (d) =>
+        `Poverty: ${d.Poverty}\nEducation: ${d.Education}`,
+    );
 });
 
 function zoom(s) {
