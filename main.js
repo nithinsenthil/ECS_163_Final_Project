@@ -82,10 +82,7 @@ d3.csv("data/calenviroscreen.csv").then((rawData) => {
   const path = d3.geoPath(projection);
   countyFeats = topojson.feature(ca, ca.objects.cb_2015_california_county_20m);
 
-  const chloroplethSvg = d3
-    .select("#chloropleth-svg")
-    .style("width", "100%")
-    .style("height", "auto");
+  const chloroplethSvg = d3.select("#chloropleth-svg").style("width", "100%");
 
   // background
   chloroplethSvg
@@ -114,17 +111,37 @@ d3.csv("data/calenviroscreen.csv").then((rawData) => {
   // county boundaries
   const countiesGroup = g.append("g").attr("id", "county-boundaries");
 
+  const tooltip = document.getElementById("tooltip");
+  const tooltipText = document.getElementById("tooltip-text");
+
   countiesGroup
     .selectAll(".county")
     .data(countyFeats.features)
     .enter()
     .append("path")
-    .attr("stroke-width", 1.25)
+    .attr("class", "county")
+    .attr("id", (d) => `county-${d.properties.GEOID}`)
+    .attr("stroke-width", 2)
     .attr("stroke", "white")
     .attr("d", path)
-    .attr("fill", (d) => color(chloroplethData.get(d.properties.GEOID)));
-  // .on("mouseover", mouseover)
-  // .on("mouseout", mouseout);
+    .attr("fill", (d) => color(chloroplethData.get(d.properties.GEOID)))
+    .on("mouseover", function (event, d) {
+      const [x, y] = path.centroid(d);
+      d3.select(tooltip)
+        .style("opacity", 1)
+        .style("left", `${x + 28}px`)
+        .style("top", `${y - 40}px`);
+
+      tooltipText.textContent = chloroplethData
+        .get(d.properties.GEOID)
+        .toFixed(2);
+      d3.selectAll(".county").style("stroke", "white");
+      d3.select(this).raise().style("stroke", "black");
+    })
+    .on("mouseout", function (event, d) {
+      d3.select(tooltip).style("opacity", 0);
+      d3.selectAll(".county").style("stroke", "white");
+    });
 
   // Select the bar-svg
   const barSvg = d3
