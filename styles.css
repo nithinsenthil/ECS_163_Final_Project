@@ -1,3 +1,12 @@
+html,
+body {
+	height: 100%;
+	margin: 0;
+	background-color: #F7F5EF;
+	font-family: "Inter", Arial, sans-serif;
+	color: #1F2933;
+}
+
 .parent {
 	height: 100%;
 	display: flex;
@@ -11,7 +20,7 @@
 }
 
 .chart {
-	border: 1px solid black;
+	border: 1px solid #D1D5DB;
 }
 
 #tooltip {
@@ -20,6 +29,7 @@
 	padding: 10px;
 	background-color: rgb(255, 255, 255, 0.8);
 	border-radius: 4px;
+	pointer-events: none;
 }
 
 #tooltip-text {
