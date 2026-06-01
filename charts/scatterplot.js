@@ -8,6 +8,7 @@ function create_scatterplot(rawData, id, chartDims, margins) {
 
   // Filter data attributes for scatterplot
   const scatterData = rawData.map((d) => ({
+    County: d.county,
     Poverty: +d.Poverty,
     Education: +d.Education,
   }));
@@ -20,7 +21,8 @@ function create_scatterplot(rawData, id, chartDims, margins) {
     .attr("text-anchor", "middle")
     .style("font-size", `20px`)
     .style("font-weight", "bold")
-    .text("Poverty vs Education");
+    .text("Poverty vs Education")
+    .style("fill", "#1F2933");
 
   // Create x and y axis
 
@@ -89,13 +91,26 @@ function create_scatterplot(rawData, id, chartDims, margins) {
     .attr("cx", (d) => scatterX1(d.Poverty))
     .attr("cy", (d) => scatterY1(d.Education))
     .attr("r", (d) => r)
-    .style("fill", "#04787e")
+    .style("fill", "#6D28D9")
     .style("fill-opacity", 0.9)
-    .style("stroke", "black")
+    .style("stroke", "#D1D5DB")
     .style("stroke-width", 0.8);
 
   // Circle tooltips
   circles
     .append("title")
-    .text((d) => `Poverty: ${d.Poverty}\nEducation: ${d.Education}`);
+    .text((d) => `County: ${d.County}\nPoverty: ${d.Poverty}\nEducation: ${d.Education}`);
+
+  circles
+    .on("mouseover", function () {
+      d3.select(this)
+        .raise()
+        .attr("r", 6)
+        .style("fill", "#FACC15")
+    })
+    .on("mouseout", function () {
+      d3.select(this)
+        .attr("r", 2)
+        .style("fill", "#6D28D9");
+    });
 }
