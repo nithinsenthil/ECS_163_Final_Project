@@ -63,6 +63,7 @@ function create_choropleth(rawData, id, chartDims, margins) {
     .attr("id", "land")
     .append("path")
     .datum(landArea)
+    .attr("transform", `translate(${margins.left}, ${margins.top})`)
     .attr("fill", "white")
     .attr("stroke-width", 1.25)
     .attr("stroke", "white")
@@ -82,6 +83,7 @@ function create_choropleth(rawData, id, chartDims, margins) {
     .append("path")
     .attr("class", "county")
     .attr("id", (d) => `county-${d.properties.GEOID}`)
+    .attr("transform", `translate(${margins.left}, ${margins.top})`)
     .attr("stroke-width", 2)
     .attr("stroke-width", 1.25)
     .attr("stroke", "white")
@@ -94,9 +96,9 @@ function create_choropleth(rawData, id, chartDims, margins) {
         .style("left", `${x + 28}px`)
         .style("top", `${y - 40}px`);
 
-      tooltipText.textContent = chloroplethData
+      tooltipText.textContent = `${chloroplethData
         .get(d.properties.GEOID)
-        .toFixed(2);
+        .toFixed(2)}\nwassup`
       d3.selectAll(".county").style("stroke", "white");
       d3.select(this).raise().style("stroke", "black");
     })
@@ -104,4 +106,73 @@ function create_choropleth(rawData, id, chartDims, margins) {
       d3.select(tooltip).style("opacity", 0);
       d3.selectAll(".county").style("stroke", "white");
     });
+
+  const dialDict = {
+
+  }
+  const dialOptions = [
+    "Pollution Burden",
+    "Pesticides",
+    "Lead",
+    "Asthma",
+    "Low Birth Weight",
+  ];
+  let selected = dialOptions[0];
+
+  const radioGroup = chloroplethSvg
+    .append("g")
+    .attr(
+      "transform",
+      `translate(${chartDims.chloropleth.width / 4}, ${chartDims.chloropleth.height / 2})`,
+    );
+
+  const items = radioGroup
+    .selectAll("g.radio-item")
+    .data(dialOptions)
+    .enter()
+    .append("g")
+    .attr("class", "radio-item")
+    .attr("transform", (d, i) => `translate(0, ${i * 28})`)
+    .style("cursor", "pointer")
+    .on("click", function (event, d) {
+      selected = d;
+      updateRadios();
+    });
+
+  // Outer ring
+  items
+    .append("circle")
+    .attr("cx", 8)
+    .attr("cy", 8)
+    .attr("r", 8)
+    .attr("fill", "white")
+    .attr("stroke", "#555")
+    .attr("stroke-width", 1.5);
+
+  // Inner dot (filled when selected)
+  items
+    .append("circle")
+    .attr("class", "inner-dot")
+    .attr("cx", 8)
+    .attr("cy", 8)
+    .attr("r", 4)
+    .attr("fill", (d, i) => (i === 0 ? "#333" : "white"));
+
+  // Label text
+  items
+    .append("text")
+    .attr("x", 22)
+    .attr("y", 13)
+    .text((d) => d)
+    .attr("font-size", "14px")
+    .attr("fill", "#333");
+
+  function updateRadios() {
+    radioGroup
+      .selectAll("g.radio-item")
+      .select(".inner-dot")
+      .attr("fill", (d) => (d === selected ? "#333" : "white"));
+
+    // Redraw choropleth
+  }
 }

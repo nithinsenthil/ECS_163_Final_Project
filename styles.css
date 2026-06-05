@@ -34,4 +34,5 @@ body {
 
 #tooltip-text {
 	font-size: 1.5rem;
+	white-space: pre-line;
 }
