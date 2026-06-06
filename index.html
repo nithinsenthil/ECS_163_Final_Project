@@ -9,7 +9,6 @@
   <body>
     <div class="section">
       <h1>Environmental Inequality in California</h1>
-      <button id="toggleScrollBtn">Pause Auto Scroll</button>
     </div>
     <div class="section">
       <h2>
@@ -113,33 +112,3 @@
     <script></script>
   </body>
 </html>
-<script>
-	const sections = document.querySelectorAll(".section");
-	let index = 0;
-	let autoScrollEnabled = true;
-	document.getElementById("toggleScrollBtn").addEventListener("click", () => {
-	  autoScrollEnabled = !autoScrollEnabled;
-	
-	  document.getElementById("toggleScrollBtn").textContent =
-		autoScrollEnabled ? "Pause Auto Scroll" : "Resume Auto Scroll";
-	});
-	function autoScroll() {
-	  if (!autoScrollEnabled) return;
-	
-	  index++;
-	  if (index >= sections.length) index = 0;
-	
-	  sections[index].scrollIntoView({
-		behavior: "smooth",
-		block: "start"
-	  });
-	
-	  console.log("STEP:", index);
-	
-	  if (window.updateStep) window.updateStep(index);
-	  if (window.updateScatter) window.updateScatter(index);
-	  if (window.updateBar) window.updateBar(index);
-  
-	}
-	setInterval(autoScroll, 6000);
-	</script>

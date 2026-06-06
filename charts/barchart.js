@@ -130,12 +130,4 @@ window.updateBar = function(step) {
       .style("fill", "#0F766E")
       .attr("opacity", 1);
   }
-
-  if (step === 3) {
-    window.bars
-      .transition()
-      .duration(600)
-      .style("fill", '#FACC15')
-      .attr("opacity", 0.5);
-  }
 };
