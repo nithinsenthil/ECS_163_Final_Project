@@ -53,7 +53,7 @@ function create_barchart(rawData, id, chartDims, margins) {
   barSvg
     .append("text")
     .attr("x", chartDims.bar.width / 2)
-    .attr("y", chartDims.bar.height - 30)
+    .attr("y", chartDims.bar.height - 10)
     .attr("font-size", "14px")
     .attr("text-anchor", "middle")
     .text("Counties");

@@ -10,16 +10,23 @@ const margins = {
   right: 50,
 };
 
+const barChartMargins = {
+  top: 50,
+  bottom: 100,
+  left: 80,
+  right: 50,
+};
+
 // Title Height
 const headerHeight = 100;
 
 /**
  * Given a JavaScript selector, target its wrapper and use the wrapper to calculate the chart dimensions
- * 
- * @param {string} selector 
+ *
+ * @param {string} selector
  * @param {{top: number; right: number; bottom: number; left: number}} margins Object with
  *                          the numerical values of margins to use for the chart visualization
- * @returns 
+ * @returns
  */
 function getWrapperDims(selector, margins) {
   const wrapper = document.querySelector(selector).closest(".visWrapper");
@@ -34,7 +41,7 @@ function getWrapperDims(selector, margins) {
 
 // Dimensions for all three charts
 const chartDims = {
-  bar: getWrapperDims("#bar-svg", margins),
+  bar: getWrapperDims("#bar-svg", barChartMargins),
   scatter: getWrapperDims("#scatter-svg", margins),
   chloropleth: getWrapperDims("#chloropleth-svg", margins),
 };
