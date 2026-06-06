@@ -1,7 +1,7 @@
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -20,7 +20,7 @@ body {
 
 .visWrapper {
   height: 600px;
-  
+
   position: relative;
   display: flex;
   justify-content: center;
@@ -37,6 +37,7 @@ body {
 }
 
 #tooltip {
+  opacity: 0;
   position: absolute;
   border: 1px solid black;
   padding: 10px;
