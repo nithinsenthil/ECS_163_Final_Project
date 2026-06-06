@@ -7,16 +7,74 @@
     <title>Final Project</title>
   </head>
   <body>
+    <h1>Environmental Inequality in California</h1>
+    <p>
+      Where do pollution and health burdens overlap across California counties?
+    </p>
+    <p>
+      Pollution does not affect every California county equally. Across
+      California, some counties experience higher environmental burdens,
+      including air pollution, pesticide exposure, and lead exposure. These
+      burdens can overlap with health and socioeconomic challenges, making some
+      communities more vulnerable than others. Pollution burden is not always
+      visible. For example, Monterey county is known for its beautiful natural
+      scenery, but its agricultural landscape makes pesticide exposure an
+      important concern for its residents.
+    </p>
+    <p>Which counties carry the highest pollution burden?</p>
+    <p>
+      This chart ranks the counties by average pollution burden. Counties with
+      longer bars have higher average pollution burden scores. These counties
+      can be used as a starting point for exploring where environmental
+      inequality may be more concentrated.
+    </p>
     <div class="visWrapper">
       <svg id="bar-svg" class="chart"></svg>
     </div>
+    <p>
+      The bar chart shows us where the pollution burden is highest, but
+      pollution alone does not tell the full story. To better understand
+      environmental inequality, we also need to examine whether pollution burden
+      overlaps with health concerns.
+    </p>
+    <p>Do pollution and health burdens appear together?</p>
+    <p>
+      Each point on the scatterplot represents a California county. This chart
+      compares pollution burden with a health indicator, such as asthma, to see
+      whether higher pollution burden overlaps with higher health burden. If
+      counties with higher pollution burden also tend to appear higher on the
+      health burden axis, this may suggest that environmental and health burdens
+      overlap in some areas.
+    </p>
     <div class="visWrapper">
       <svg id="scatter-svg" class="chart"></svg>
     </div>
+    <p>
+      The scatterplot helps us compare counties numerically, but it does not
+      show exactly where these counties are located. To add a geographic
+      perspective, our map allows users to explore how pollution and health
+      burdens are distributed across the state.
+    </p>
+    <p>Where are these burdens located?</p>
+    <p>
+      This map displays how environmental and health burdens vary across
+      California counties. Darker colors represent higher burden, while lighter
+      colors represent lower burden. Users can hover over each county to see
+      more details, including pollution burden, health burden indicators, and
+      socioeconomic measures.
+    </p>
     <div class="visWrapper">
       <svg id="chloropleth-svg" class="chart" width="100%" height="100%"></svg>
       <div id="tooltip"><span id="tooltip-text"></span></div>
     </div>
+    <p>
+      Together, the bar chart, scatterplot, and map show that environmental
+      inequality is not only about pollution levels. It is also about how
+      pollution, health, and socioeconomic burdens overlap across places. Our
+      overall goal is not to claim direct causation, but to identify patterns,
+      compare counties, and better understand where environmental and health
+      burdens may be concentrated in California.
+    </p>
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://unpkg.com/topojson@3"></script>
