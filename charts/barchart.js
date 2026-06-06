@@ -118,7 +118,7 @@ window.updateBar = function(step) {
   if (step === 1) {
     window.bars
       .transition()
-      .duration(600)
+      .duration(400)
       .style("fill", '#04787e')
       .attr("opacity", 0.7);
   }
@@ -126,16 +126,8 @@ window.updateBar = function(step) {
   if (step === 2) {
     window.bars
       .transition()
-      .duration(600)
+      .duration(400)
       .style("fill", "#0F766E")
       .attr("opacity", 1);
-  }
-
-  if (step === 3) {
-    window.bars
-      .transition()
-      .duration(600)
-      .style("fill", '#FACC15')
-      .attr("opacity", 0.5);
   }
 };
