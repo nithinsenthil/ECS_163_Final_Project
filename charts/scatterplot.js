@@ -57,7 +57,7 @@ function create_scatterplot(rawData, id, chartDims, margins) {
   scatterSvg
     .append("text")
     .attr("x", chartDims.scatter.width / 2)
-    .attr("y", chartDims.scatter.height - 90)
+    .attr("y", chartDims.scatter.height - 10)
     .attr("font-size", "14px")
     .attr("text-anchor", "middle")
     .text("Poverty");
