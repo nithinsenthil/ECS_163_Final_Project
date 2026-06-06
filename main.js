@@ -55,3 +55,13 @@ d3.csv("data/calenviroscreen.csv").then((rawData) => {
 
   create_scatterplot(rawData, "#scatter-svg", chartDims, margins);
 });
+window.updateStep = function(step) {
+
+  if (window.updateBar) {
+    window.updateBar(step);
+  }
+
+  if (window.updateScatter) {
+    window.updateScatter(step);
+  }
+};

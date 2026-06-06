@@ -92,7 +92,7 @@ function create_scatterplot(rawData, id, chartDims, margins) {
 
   // Draw circles
   const r = 3;
-  const circles = scatterSvg
+  const circles = window.circles = scatterSvg
     .append("g")
     .classed("mark", true)
     .selectAll("circle")
@@ -102,7 +102,7 @@ function create_scatterplot(rawData, id, chartDims, margins) {
     .attr("cx", (d) => scatterX1(d.Poverty))
     .attr("cy", (d) => scatterY1(d.Education))
     .attr("r", 3)
-    .style("fill", "#6D28D9")
+    .style("fill", "#0F766E")
     .style("fill-opacity", 0.9)
     .style("stroke", "#D1D5DB")
     .style("stroke-width", 0.8);
@@ -120,6 +120,19 @@ function create_scatterplot(rawData, id, chartDims, margins) {
       d3.select(this).raise().attr("r", 6).style("fill", "#FACC15");
     })
     .on("mouseout", function () {
-      d3.select(this).attr("r", 3).style("fill", "#6D28D9");
+      d3.select(this).attr("r", 3).style("fill", "#0F766E");
     });
 }
+window.updateScatter = function(step) {
+
+  if (!window.circles) {
+    console.log("No circles");
+    return;
+  }
+  console.log("Updating scatter:", step);
+  window.circles
+    .transition()
+    .duration(600)
+    .attr("r", 6)
+    .style("fill", "#0F766E");
+};
