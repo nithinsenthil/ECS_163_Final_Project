@@ -89,7 +89,7 @@ function create_scatterplot(rawData, id, chartDims, margins) {
     .text("Education");
 
   // Draw circles
-  const r = 2;
+  const r = 3;
   const circles = scatterSvg
     .append("g")
     .classed("mark", true)
@@ -118,6 +118,6 @@ function create_scatterplot(rawData, id, chartDims, margins) {
       d3.select(this).raise().attr("r", 6).style("fill", "#FACC15");
     })
     .on("mouseout", function () {
-      d3.select(this).attr("r", 2).style("fill", "#6D28D9");
+      d3.select(this).attr("r", 3).style("fill", "#6D28D9");
     });
 }
