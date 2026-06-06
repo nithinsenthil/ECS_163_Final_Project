@@ -34,19 +34,9 @@ function getWrapperDims(selector, margins) {
 
 // Dimensions for all three charts
 const chartDims = {
-  chloropleth: {
-    width: width,
-    height: height,
-    innerWidth: width - margins.left - margins.right,
-    innerHeight: height - headerHeight - margins.top - margins.bottom,
-  },
-  bar: getWrapperDims(".chart", margins),
-  scatter: {
-    width: width,
-    height: height,
-    innerWidth: width - margins.left - margins.right,
-    innerHeight: height - headerHeight - margins.top - margins.bottom,
-  },
+  bar: getWrapperDims("#bar-svg", margins),
+  scatter: getWrapperDims("#scatter-svg", margins),
+  chloropleth: getWrapperDims("#chloropleth-svg", margins),
 };
 
 d3.csv("data/calenviroscreen.csv").then((rawData) => {
