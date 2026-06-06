@@ -149,7 +149,12 @@ function create_choropleth(rawData, id, chartDims, margins) {
   const dialOptions = ["Pollution Burden", "Pesticides", "Lead", "Asthma"];
   let selected = dialOptions[0];
 
-  const chloroplethSvg = d3.select(id).style("width", "100%");
+  const svg = d3.select(id);
+  svg
+    .attr("viewBox", `0 0 ${chartDims.bar.width} ${chartDims.bar.height}`)
+    .attr("preserveAspectRatio", "xMidYMid meet");
+
+  const chloroplethSvg = svg.append("g");
 
   // background
   chloroplethSvg
