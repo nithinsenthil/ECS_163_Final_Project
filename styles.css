@@ -19,15 +19,16 @@ body {
 }
 
 .visWrapper {
-  border: 1px solid blue;
-  height: 400px;
+  height: 600px;
+  
   position: relative;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
 }
 
 .chart {
   width: 100%;
+  max-width: 1200px;
   height: 100%;
   flex: 1;
   min-height: 0;
