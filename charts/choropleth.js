@@ -4,23 +4,23 @@ function color(value, dataType) {
   const pollutionBurdenColor = d3
     .scaleLinear()
     .domain([20, 55])
-    .range(["#e0f2fe", "#0369a1"]);
+    .range(["#E6F4EA", "#081C15"]);
   const pesticideColor = d3
     .scaleLinear()
     .domain([0, 4250])
-    .range(["#e0f2fe", "#0369a1"]);
+    .range(["#E6F4EA", "#081C15"]);
   const leadColor = d3
     .scaleLinear()
     .domain([20, 65])
-    .range(["#e0f2fe", "#0369a1"]);
+    .range(["#E6F4EA", "#081C15"]);
   const asthmaColor = d3
     .scaleLinear()
     .domain([20, 110])
-    .range(["#e0f2fe", "#0369a1"]);
+    .range(["#FFF7ED", "#7C2D12"]);
   const lowBirthWeightColor = d3
     .scaleLinear()
     .domain([0, 10])
-    .range(["#e0f2fe", "#0369a1"]);
+    .range(["#FFF7ED", "#7C2D12"]);
 
   switch (dataType) {
     case "Pollution Burden":
@@ -272,11 +272,11 @@ function create_choropleth(rawData, id, chartDims, margins) {
 
         tooltipText.textContent = `County: ${cts.get(d.properties.GEOID)}\n${getTextContent(selectedVar, d)}`;
         d3.selectAll(".county").style("stroke", "white");
-        d3.select(this).raise().style("stroke", "black");
+        d3.select(this).raise().style("stroke", "black").attr("stroke-width", 2.5);
       })
       .on("mouseout", function (event, d) {
         d3.select(tooltip).style("opacity", 0);
-        d3.selectAll(".county").style("stroke", "white");
+        d3.selectAll(".county").style("stroke", "white").attr("stroke-width", 1.25);
       });
   }
 
