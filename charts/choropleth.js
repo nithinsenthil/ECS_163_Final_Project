@@ -187,7 +187,7 @@ function create_choropleth(rawData, id, chartDims, margins) {
     .append("g")
     .attr(
       "transform",
-      `translate(${chartDims.chloropleth.width / 4}, ${chartDims.chloropleth.height / 2})`,
+      `translate(20, ${chartDims.chloropleth.height - 120})`,
     );
 
   const items = radioGroup
