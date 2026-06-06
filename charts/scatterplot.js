@@ -6,12 +6,21 @@ function create_scatterplot(rawData, id, chartDims, margins) {
     .attr("width", chartDims.scatter.width)
     .attr("height", chartDims.scatter.height);
 
-  // Filter data attributes for scatterplot
-  const scatterData = rawData.map((d) => ({
-    County: d.county,
-    Poverty: +d.Poverty,
-    Education: +d.Education,
-  }));
+  const clean = (v) => {
+    if (v == null) return null;
+    const n = +String(v).trim();
+    return isNaN(n) ? null : n;
+  };
+    
+  const scatterData = rawData.map(d => ({
+      County: d.county.trim(),
+      Poverty: clean(d.Poverty),
+      Education: clean(d.Education)
+    }))
+    .filter(d =>
+      d.Poverty != null &&
+      d.Education != null
+    );
 
   // Plot Title
   scatterSvg
@@ -90,7 +99,7 @@ function create_scatterplot(rawData, id, chartDims, margins) {
     .classed("mark-circle", true)
     .attr("cx", (d) => scatterX1(d.Poverty))
     .attr("cy", (d) => scatterY1(d.Education))
-    .attr("r", (d) => r)
+    .attr("r", 3)
     .style("fill", "#6D28D9")
     .style("fill-opacity", 0.9)
     .style("stroke", "#D1D5DB")
