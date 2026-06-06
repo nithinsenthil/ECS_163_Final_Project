@@ -1,10 +1,10 @@
 function create_scatterplot(rawData, id, chartDims, margins) {
-	// Select the scatter-svg
-  const scatterSvg = d3
-    .selectAll(id)
-    .append("g")
-    .attr("width", chartDims.scatter.width)
-    .attr("height", chartDims.scatter.height);
+  const svg = d3.select(id);
+  svg
+    .attr("viewBox", `0 0 ${chartDims.bar.width} ${chartDims.bar.height}`)
+    .attr("preserveAspectRatio", "xMidYMid meet");
+
+  const scatterSvg = svg.append("g");
 
   const clean = (v) => {
     if (v == null) return null;
@@ -108,18 +108,16 @@ function create_scatterplot(rawData, id, chartDims, margins) {
   // Circle tooltips
   circles
     .append("title")
-    .text((d) => `County: ${d.County}\nPoverty: ${d.Poverty}\nEducation: ${d.Education}`);
+    .text(
+      (d) =>
+        `County: ${d.County}\nPoverty: ${d.Poverty}\nEducation: ${d.Education}`,
+    );
 
   circles
     .on("mouseover", function () {
-      d3.select(this)
-        .raise()
-        .attr("r", 6)
-        .style("fill", "#FACC15")
+      d3.select(this).raise().attr("r", 6).style("fill", "#FACC15");
     })
     .on("mouseout", function () {
-      d3.select(this)
-        .attr("r", 2)
-        .style("fill", "#6D28D9");
+      d3.select(this).attr("r", 2).style("fill", "#6D28D9");
     });
 }

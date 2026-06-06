@@ -1,10 +1,10 @@
 function create_barchart(rawData, id, chartDims, margins) {
-  // Select the bar-svg
-  const barSvg = d3
-    .selectAll(id)
-    .append("g")
-    .attr("width", chartDims.bar.width)
-    .attr("height", chartDims.bar.height);
+  const svg = d3.select(id);
+  svg
+    .attr("viewBox", `0 0 ${chartDims.bar.width} ${chartDims.bar.height}`)
+    .attr("preserveAspectRatio", "xMidYMid meet");
+
+  const barSvg = svg.append("g");
 
   // Reduce data to Type_1 frequencies
   const barData = Array.from(

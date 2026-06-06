@@ -1,38 +1,52 @@
-html,
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-	height: 100%;
-	margin: 0;
-	background-color: #F7F5EF;
-	font-family: "Inter", Arial, sans-serif;
-	color: #1F2933;
+  height: 100%;
+  margin: 0;
+  background-color: #f7f5ef;
+  font-family: "Inter", Arial, sans-serif;
+  color: #1f2933;
+  min-height: 100vh;
+  padding: 100px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
 }
 
-.parent {
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
-}
+.visWrapper {
+  height: 600px;
 
-#chloropleth-wrapper {
-	flex: 1;
-	position: relative
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .chart {
-	border: 1px solid #D1D5DB;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+  display: block;
+  border: 1px solid #d1d5db;
 }
 
 #tooltip {
-	position: absolute;
-	border: 1px solid black;
-	padding: 10px;
-	background-color: rgb(255, 255, 255, 0.8);
-	border-radius: 4px;
-	pointer-events: none;
+  opacity: 0;
+  position: absolute;
+  border: 1px solid black;
+  padding: 10px;
+  background-color: rgb(255, 255, 255, 0.8);
+  border-radius: 4px;
+  pointer-events: none;
 }
 
 #tooltip-text {
-	font-size: 0.8rem;
-	white-space: pre-line;
+  font-size: 0.8rem;
+  white-space: pre-line;
 }
