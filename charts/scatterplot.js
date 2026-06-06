@@ -11,16 +11,15 @@ function create_scatterplot(rawData, id, chartDims, margins) {
     const n = +String(v).trim();
     return isNaN(n) ? null : n;
   };
-    
-  const scatterData = rawData.map(d => ({
+
+  const scatterData = rawData
+    .map((d) => ({
       County: d.county.trim(),
       Poverty: clean(d.Poverty),
-      Education: clean(d.Education)
+      Education: clean(d.Education),
     }))
-    .filter(d =>
-      d.Poverty != null &&
-      d.Education != null
-    );
+    .filter((d) => d.Poverty != null && d.Education != null)
+    .map((d) => ({ ...d, Education: 100 - d.Education }));
 
   // Plot Title
   scatterSvg
@@ -65,7 +64,10 @@ function create_scatterplot(rawData, id, chartDims, margins) {
   // Compute y axis
   const scatterY1 = d3
     .scaleLinear()
-    .domain([0, d3.max(scatterData, (d) => d.Education)])
+    .domain([
+      d3.min(scatterData, (d) => d.Education),
+      d3.max(scatterData, (d) => d.Education),
+    ])
     .range([margins.top + chartDims.scatter.innerHeight, margins.top]);
 
   // Draw y axis
