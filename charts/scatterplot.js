@@ -15,11 +15,11 @@ function create_scatterplot(rawData, id, chartDims, margins) {
   const scatterData = rawData
     .map((d) => ({
       County: d.county.trim(),
-      Poverty: clean(d.Poverty),
-      Education: clean(d.Education),
+      Lead: clean(d.Lead),
+      Asthma: clean(d.Asthma),
     }))
-    .filter((d) => d.Poverty != null && d.Education != null)
-    .map((d) => ({ ...d, Education: 100 - d.Education }));
+    .filter((d) => d.Lead != null && d.Asthma != null)
+    // .map((d) => ({ ...d, Education: 100 - d.Education }));
 
   // Plot Title
   scatterSvg
@@ -29,7 +29,7 @@ function create_scatterplot(rawData, id, chartDims, margins) {
     .attr("text-anchor", "middle")
     .style("font-size", `20px`)
     .style("font-weight", "bold")
-    .text("Poverty vs Education")
+    .text("Lead vs Asthma")
     .style("fill", "#1F2933");
 
   // Create x and y axis
@@ -37,7 +37,7 @@ function create_scatterplot(rawData, id, chartDims, margins) {
   // Compute x axis
   const scatterX1 = d3
     .scaleLinear()
-    .domain([0, d3.max(scatterData, (d) => d.Poverty)])
+    .domain([0, d3.max(scatterData, (d) => d.Lead)])
     .range([margins.left, margins.left + chartDims.scatter.innerWidth]);
 
   // Draw x axis
@@ -59,14 +59,14 @@ function create_scatterplot(rawData, id, chartDims, margins) {
     .attr("y", chartDims.scatter.height - 10)
     .attr("font-size", "14px")
     .attr("text-anchor", "middle")
-    .text("Poverty");
+    .text("Lead");
 
   // Compute y axis
   const scatterY1 = d3
     .scaleLinear()
     .domain([
-      d3.min(scatterData, (d) => d.Education),
-      d3.max(scatterData, (d) => d.Education),
+      d3.min(scatterData, (d) => d.Asthma),
+      d3.max(scatterData, (d) => d.Asthma),
     ])
     .range([margins.top + chartDims.scatter.innerHeight, margins.top]);
 
@@ -88,7 +88,7 @@ function create_scatterplot(rawData, id, chartDims, margins) {
     )
     .attr("text-anchor", "middle")
     .attr("font-size", "14px")
-    .text("Education");
+    .text("Asthma");
 
   // Draw circles
   const r = 3;
@@ -99,8 +99,8 @@ function create_scatterplot(rawData, id, chartDims, margins) {
     .data(scatterData)
     .join("circle")
     .classed("mark-circle", true)
-    .attr("cx", (d) => scatterX1(d.Poverty))
-    .attr("cy", (d) => scatterY1(d.Education))
+    .attr("cx", (d) => scatterX1(d.Lead))
+    .attr("cy", (d) => scatterY1(d.Asthma))
     .attr("r", 3)
     .style("fill", "#0F766E")
     .style("fill-opacity", 0.9)
@@ -112,7 +112,7 @@ function create_scatterplot(rawData, id, chartDims, margins) {
     .append("title")
     .text(
       (d) =>
-        `County: ${d.County}\nPoverty: ${d.Poverty}\nEducation: ${d.Education}`,
+        `County: ${d.County}\nLead: ${d.Lead}\nAsthma ${d.Asthma}`,
     );
 
   circles
