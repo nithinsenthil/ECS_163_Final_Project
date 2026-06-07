@@ -10,7 +10,7 @@ body {
   background-color: #f7f5ef;
   font-family: "Inter", Arial, sans-serif;
   color: #1f2933;
-  min-height: 100vh;
+  min-height: 500vh;
   padding: 100px;
 
   display: flex;
@@ -19,11 +19,27 @@ body {
   gap: 100px;
 }
 
+.contents {
+  height: calc(100vh - 2 * 100px);
+  position: sticky;
+  top: 100px;
+  width: 100%;
+}
+
 .section {
-	display: flex;
-	flex-direction: column;
-	gap: 40px;
-	max-width: 1200px;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  max-width: 1200px;
+}
+
+#section-1 {
+  opacity: 1;
 }
 
 .visWrapper {
@@ -58,5 +74,5 @@ body {
   white-space: pre-line;
 }
 html {
-	scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
