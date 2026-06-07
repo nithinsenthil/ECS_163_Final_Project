@@ -10,10 +10,7 @@ function scaleOpacity(value) {
 
 window.addEventListener("scroll", function () {
   const num = window.scrollY / window.innerHeight;
-  console.log("scroll", num);
   let x = 0;
-
-  console.log(document.getElementsByClassName("section"));
 
   [...document.getElementsByClassName("section")].forEach((element) => {
     element.style.opacity = 0;
