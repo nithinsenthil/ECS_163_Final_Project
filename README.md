@@ -36,6 +36,8 @@ derived \
 `data/california_06_counties.js`: Holds coordinate mappings for all counties. It
 is used in the choropleth to define the borders for each county \
 `index.html`: Web page entry html, defines the page's static content \
+`scrolljack.js`: Implements the transforms and opacity changes for
+the scrolljacking animations by manually reading the scroll distance on the page on every scroll event.\
 `main.js`: Defines chart margins, reads dataset and calls visualization 
 implementations \
 `README.md`: The current document \
