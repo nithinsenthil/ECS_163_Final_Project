@@ -21,6 +21,10 @@ function color(value, dataType) {
     .scaleLinear()
     .domain([0, 10])
     .range(["#FFF7ED", "#7C2D12"]);
+  const povertyColor = d3
+    .scaleLinear()
+    .domain([15, 50])
+    .range(["#ede1ff", "#3b127c"]);
 
   switch (dataType) {
     case "Pollution Burden":
@@ -33,6 +37,8 @@ function color(value, dataType) {
       return asthmaColor(value);
     case "Low Birth Weight":
       return lowBirthWeightColor(value);
+    case "Poverty":
+      return povertyColor(value);
   }
 }
 
@@ -50,8 +56,6 @@ function create_choropleth(rawData, id, chartDims, margins) {
       d.properties.GEOID,
     ]),
   );
-
-  console.log(ctsDecoder);
 
   const pollutionBurdenRolled = d3.rollup(
     rawData,
@@ -83,7 +87,11 @@ function create_choropleth(rawData, id, chartDims, margins) {
     (d) => d.county.trim(),
   );
 
-  console.log(lowBirthWeightRolled);
+  const povertyRolled = d3.rollup(
+    rawData,
+    (v) => d3.mean(v, (d) => d.Poverty),
+    (d) => d.county.trim(),
+  );
 
   const choroplethData = {
     "Pollution Burden": new Map(
@@ -116,6 +124,12 @@ function create_choropleth(rawData, id, chartDims, margins) {
         Low_Birth_Weight,
       ]),
     ),
+    Poverty: new Map(
+      Array.from(povertyRolled, ([county, Poverty]) => [
+        ctsDecoder.get(county),
+        Poverty,
+      ]),
+    ),
   };
 
   const maxVal = Math.max(
@@ -146,7 +160,13 @@ function create_choropleth(rawData, id, chartDims, margins) {
   countyFeats = topojson.feature(ca, ca.objects.cb_2015_california_county_20m);
 
   const dialDict = {};
-  const dialOptions = ["Pollution Burden", "Pesticides", "Lead", "Asthma"];
+  const dialOptions = [
+    "Pollution Burden",
+    "Pesticides",
+    "Lead",
+    "Asthma",
+    "Poverty",
+  ];
   let selected = dialOptions[0];
 
   const svg = d3.select(id);
@@ -185,10 +205,7 @@ function create_choropleth(rawData, id, chartDims, margins) {
 
   const radioGroup = chloroplethSvg
     .append("g")
-    .attr(
-      "transform",
-      `translate(20, ${chartDims.chloropleth.height - 120})`,
-    );
+    .attr("transform", `translate(20, ${chartDims.chloropleth.height - 150})`);
 
   const items = radioGroup
     .selectAll("g.radio-item")
@@ -272,11 +289,16 @@ function create_choropleth(rawData, id, chartDims, margins) {
 
         tooltipText.textContent = `County: ${cts.get(d.properties.GEOID)}\n${getTextContent(selectedVar, d)}`;
         d3.selectAll(".county").style("stroke", "white");
-        d3.select(this).raise().style("stroke", "black").attr("stroke-width", 2.5);
+        d3.select(this)
+          .raise()
+          .style("stroke", "black")
+          .attr("stroke-width", 2.5);
       })
       .on("mouseout", function (event, d) {
         d3.select(tooltip).style("opacity", 0);
-        d3.selectAll(".county").style("stroke", "white").attr("stroke-width", 1.25);
+        d3.selectAll(".county")
+          .style("stroke", "white")
+          .attr("stroke-width", 1.25);
       });
   }
 
@@ -297,7 +319,11 @@ function create_choropleth(rawData, id, chartDims, margins) {
       (selectedVar == "Asthma" ? "*" : "") +
       "Asthma: " +
       choroplethData["Asthma"].get(d.properties.GEOID).toFixed(2);
+    const poverty =
+      (selectedVar == "Asthma" ? "*" : "") +
+      "Poverty: " +
+      choroplethData["Poverty"].get(d.properties.GEOID).toFixed(2);
 
-    return `${pollutionBurden}\n${pesticides}\n${lead}\n${asthma}\n`;
+    return `${pollutionBurden}\n${pesticides}\n${lead}\n${asthma}\n${poverty}\n`;
   }
 }

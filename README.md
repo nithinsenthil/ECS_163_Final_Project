@@ -22,6 +22,7 @@ ECS_163_Final_Project/
 ├── index.html
 ├── main.js
 ├── README.md
+├── scrolljack.js
 └── styles.css
 ```
 ### Files
@@ -39,6 +40,9 @@ is used in the choropleth to define the borders for each county \
 `main.js`: Defines chart margins, reads dataset and calls visualization 
 implementations \
 `README.md`: The current document \
+`scrolljack.js`: Implements the transforms and opacity changes for the 
+scrolljacking animations by manually reading the scroll distance on the page on 
+every scroll event.\
 `styles.css`: CSS stylesheet imported into index.html
 
 ## Installation
