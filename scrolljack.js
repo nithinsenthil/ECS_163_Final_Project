@@ -1,11 +1,11 @@
 function scaleOpacity(value) {
-  if (value >= 0.7) {
+  if (value >= 0.4) {
     return 1;
   }
-  if (value <= 0.3) {
+  if (value <= 0.2) {
     return 0;
   }
-  return (value - 0.2) / 0.4;
+  return (value - 0.2) / 0.2;
 }
 
 window.addEventListener("scroll", function () {
