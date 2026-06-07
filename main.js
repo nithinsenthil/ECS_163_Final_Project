@@ -65,3 +65,20 @@ window.updateStep = function(step) {
     window.updateScatter(step);
   }
 };
+const sections = document.querySelectorAll(".section");
+
+function updateActiveSection() {
+  const center = window.innerHeight / 2;
+
+  sections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+
+    if (rect.top < center && rect.bottom > center) {
+      section.classList.add("active");
+    } else {
+      section.classList.remove("active");
+    }
+  });
+}
+window.addEventListener("scroll", updateActiveSection);
+updateActiveSection();

@@ -7,10 +7,10 @@
     <title>Final Project</title>
   </head>
   <body>
-    <div class="section">
+    <div class="section active">
       <h1>Environmental Inequality in California</h1>
     </div>
-    <div class="section">
+    <div class="section fade-section">
       <h2>
         Where do pollution and health burdens overlap across California
         counties?
@@ -54,7 +54,7 @@
         burden overlaps with health concerns.
       </p>
     </div>
-    <div class="section">
+    <div class="section fade-section">
       <h2>Do pollution and health burdens appear together?</h2>
       <p>
         Each point on the scatterplot represents a California county. This chart
@@ -74,7 +74,7 @@
         burdens are distributed across the state.
       </p>
     </div>
-    <div class="section">
+    <div class="section fade-section">
       <h2>Where are these burdens located?</h2>
       <p>
         This map displays how environmental and health burdens vary across
@@ -117,31 +117,4 @@
   
   let index = 0;
   let isScrolling = false;
-  
-  window.addEventListener("wheel", (event) => {
-  
-    if (isScrolling) return;
-  
-    isScrolling = true;
-  
-    if (event.deltaY > 0) {
-      index = Math.min(index + 1, sections.length - 1);
-    } else {
-      index = Math.max(index - 1, 0);
-    }
-  
-    sections[index].scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-  
-    if (window.updateScatter) window.updateScatter(index);
-    if (window.updateBar) window.updateBar(index);
-    if (window.updateMap) window.updateMap(index);
-  
-    setTimeout(() => {
-      isScrolling = false;
-    }, 1000);
-  
-  }, { passive: true });
-  </script>
+</script>

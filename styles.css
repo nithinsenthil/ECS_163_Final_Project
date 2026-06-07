@@ -57,3 +57,11 @@ body {
   font-size: 0.8rem;
   white-space: pre-line;
 }
+.fade-section {
+  opacity: 0.2;
+  transition: opacity 0.5s;
+}
+
+.fade-section.active {
+  opacity: 1;
+}
