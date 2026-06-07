@@ -10,7 +10,7 @@ body {
   background-color: #f7f5ef;
   font-family: "Inter", Arial, sans-serif;
   color: #1f2933;
-  min-height: 500vh;
+  min-height: 200vh;
   padding: 100px;
 
   display: flex;
@@ -36,6 +36,9 @@ body {
   justify-content: center;
   gap: 40px;
   max-width: 1200px;
+  transition:
+    transform 0.2s ease,
+    opacity 0.8s ease;
 }
 
 #section-1 {
