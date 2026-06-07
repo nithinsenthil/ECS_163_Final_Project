@@ -24,7 +24,7 @@ function color(value, dataType) {
   const povertyColor = d3
     .scaleLinear()
     .domain([15, 50])
-    .range(["#FFF7ED", "#522d8e"]);
+    .range(["#ede1ff", "#3b127c"]);
 
   switch (dataType) {
     case "Pollution Burden":
