@@ -60,3 +60,18 @@ body {
 html {
 	scroll-behavior: smooth;
 }
+
+#bar-tooltip {
+  opacity: 0;
+  position: absolute;
+  border: 1px solid black;
+  padding: 10px;
+  background-color: rgb(255, 255, 255, 0.8);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+#bar-tooltip-text {
+  font-size: 0.8rem;
+  white-space: pre-line;
+}
