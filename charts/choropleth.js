@@ -238,7 +238,7 @@ function create_choropleth(rawData, id, chartDims, margins) {
 
   legendGroup
     .append("rect")
-    .attr("transform", "translate(0, 48)")
+    .attr("transform", "translate(0, 50)")
     .attr("width", 10)
     .attr("height", 10)
     .style("fill", colorRanges[selected][0])
@@ -246,13 +246,13 @@ function create_choropleth(rawData, id, chartDims, margins) {
 
   legendGroup
     .append("text")
-    .attr("transform", "translate(16, 57)")
+    .attr("transform", "translate(16, 59)")
     .text("Lower burden (lighter) to")
     .attr("font-size", 12);
 
   legendGroup
     .append("rect")
-    .attr("transform", "translate(0, 64)")
+    .attr("transform", "translate(0, 66)")
     .attr("width", 10)
     .attr("height", 10)
     .style("fill", colorRanges[selected][1])
