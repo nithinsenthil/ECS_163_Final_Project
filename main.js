@@ -10,6 +10,8 @@ const margins = {
   right: 50,
 };
 
+// Give special margins to the bar chart
+// Bar chart requires more bottom margin to have enough space for county labels
 const barChartMargins = {
   top: 50,
   bottom: 100,
@@ -17,15 +19,12 @@ const barChartMargins = {
   right: 50,
 };
 
-// Title Height
-const headerHeight = 100;
-
 /**
  * Given a JavaScript selector, target its wrapper and use the wrapper to calculate the chart dimensions
  *
  * @param {string} selector
  * @param {{top: number; right: number; bottom: number; left: number}} margins Object with
- *                          the numerical values of margins to use for the chart visualization
+ *    the numerical values of margins to use for the chart visualization
  * @returns
  */
 function getWrapperDims(selector, margins) {
@@ -39,29 +38,21 @@ function getWrapperDims(selector, margins) {
   };
 }
 
-// Dimensions for all three charts
+// Dimensions for all three charts, calculated with `getWrapperDims` helper function.
 const chartDims = {
   bar: getWrapperDims("#bar-svg", barChartMargins),
   scatter: getWrapperDims("#scatter-svg", margins),
   choropleth: getWrapperDims("#choropleth-svg", margins),
 };
 
+/**
+ * Process data from included SVG and create charts
+ */
 d3.csv("data/calenviroscreen.csv").then((rawData) => {
   console.log("rawData", rawData);
 
   create_choropleth(rawData, "#choropleth-svg", chartDims, margins);
 
   create_barchart(rawData, "#bar-svg", chartDims, margins);
-
   create_scatterplot(rawData, "#scatter-svg", chartDims, margins);
 });
-window.updateStep = function(step) {
-
-  if (window.updateBar) {
-    window.updateBar(step);
-  }
-
-  if (window.updateScatter) {
-    window.updateScatter(step);
-  }
-};
