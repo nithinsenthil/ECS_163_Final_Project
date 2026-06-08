@@ -238,6 +238,7 @@ function create_choropleth(rawData, id, chartDims, margins) {
 
   legendGroup
     .append("rect")
+    .attr("id", "lighter-square")
     .attr("transform", "translate(0, 50)")
     .attr("width", 10)
     .attr("height", 10)
@@ -252,13 +253,14 @@ function create_choropleth(rawData, id, chartDims, margins) {
 
   legendGroup
     .append("rect")
+    .attr("id", "darker-square")
     .attr("transform", "translate(0, 66)")
     .attr("width", 10)
     .attr("height", 10)
     .style("fill", colorRanges[selected][1])
     .style("stroke", "black");
-  
-    legendGroup
+
+  legendGroup
     .append("text")
     .attr("transform", "translate(16, 74)")
     .text("Higher burden (darker)")
@@ -282,6 +284,12 @@ function create_choropleth(rawData, id, chartDims, margins) {
     .on("click", function (event, d) {
       selected = d;
       updateRadios();
+
+      const lighterLegendSquare = d3.select("#lighter-square");
+      lighterLegendSquare.style("fill", colorRanges[selected][0]);
+
+      const darkerLegendSquare = d3.select("#darker-square");
+      darkerLegendSquare.style("fill", colorRanges[selected][1])
     });
 
   // Outer ring
