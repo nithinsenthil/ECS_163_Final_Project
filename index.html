@@ -7,7 +7,7 @@
     <title>Final Project</title>
   </head>
   <body>
-<div class="contents">    
+  <div class="contents">    
     <div class="section" id="section-1">
       <h1>Environmental Inequality in California</h1>
     </div>
@@ -20,7 +20,7 @@
         Environmental inequality happens when pollution and environmental burdens are not distributed evenly across communities. 
         California is often discussed through its major cities, coastlines, agriculture, and natural landscapes, 
         but environmental burden does not affect every county in the state the same way. 
-        Some counties face higher exposure to pollution-related factors, may make 
+        Some counties face higher exposure to pollution-related factors, which may make 
         communities more vulnerable to long-term environmental stress.
       </p>
       <p>
@@ -59,9 +59,9 @@
       <h2>Do pollution and health burdens appear together?</h2>
       <p>
         Environmental inequality also has a health component to it.
-      Pollution burden is only one part of the story. Environmental exposure can overlap with health concerns, especially in communities where people may already face higher risks from pollution-related conditions. Lead exposure and asthma are two important health-related indicators because they show how environmental conditions may connect to physical health burdens.
-      The scatterplot below compares lead exposure with asthma rates across California counties. Each point represents one county. Counties positioned farther to the right have higher lead exposure, while counties positioned higher on the graph have higher asthma rates.
-      When lead exposure and asthma rates appear high in the same county, it suggests that environmental and health burdens may be overlapping. This does not prove that lead exposure directly causes asthma, but it helps reveal where multiple concerns may be concentrated at the same time.
+        Pollution burden is only one part of the story. Environmental exposure can overlap with health concerns, especially in communities where people may already face higher risks from pollution-related conditions. Lead exposure and asthma are two important health-related indicators because they show how environmental conditions may connect to physical health burdens.
+        The scatterplot below compares lead exposure with asthma rates across California counties. Each point represents one county. Counties positioned farther to the right have higher lead exposure, while counties positioned higher on the graph have higher asthma rates.
+        When lead exposure and asthma rates appear high in the same county, it suggests that environmental and health burdens may be overlapping. This does not prove that lead exposure directly causes asthma, but it helps reveal where multiple concerns may be concentrated at the same time.
       </p>
       <div class="visWrapper">
         <svg id="scatter-svg" class="chart"></svg>
@@ -80,11 +80,10 @@
         The choropleth map below allows different county-level indicators geographically. Darker colors represent higher values, while lighter colors represent lower values. 
         By switching between variables, the map shows how pollution, health, and socioeconomic burdens appear across different parts of California.
         Hovering over a county reveals more detailed values for that location, making it possible to compare one county’s conditions with the broader statewide pattern.
-
       </p>
       <div class="visWrapper">
         <svg
-          id="chloropleth-svg"
+          id="choropleth-svg"
           class="chart"
           width="100%"
           height="100%"
@@ -99,20 +98,29 @@
 
       </p>
 
+    </div>
+
+    <div class="section" id="section-6">
+      <h2>Definitions</h2>
       <p>
         ¹ CalEnviroScreen 4.0: A California environmental justice dataset that combines pollution, health, demographic, and socioeconomic indicators to identify communities experiencing higher cumulative burdens.
+      </p>
+      <p>
         ² Office of Environmental Health Hazard Assessment: The California agency that created and maintains CalEnviroScreen, and focuses on protecting and enhancing the health of California's environment and citizens through evaluations that help support regulations.
+      </p>
+      <p>
         ³ Pollution burden: A measure of environmental stress from pollution sources and polluted conditions, such as air pollution, pesticides, traffic pollution, groundwater threats, and other environmental indicators.
       </p>
+    </div>
 
     </div>
-  </div>
+  
 
 
 
-    <div id="bar-tooltip">
-        <p id="bar-tooltip-text"></p>
-    </div>
+      <div id="bar-tooltip">
+          <p id="bar-tooltip-text"></p>
+      </div>
   
   
       <script src="https://d3js.org/d3.v7.min.js"></script>
