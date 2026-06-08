@@ -1,4 +1,15 @@
+/**
+ * Create the barchart for the page using d3.
+ *
+ * @param {any} rawData Data parsed by d3.csv from the dataset.
+ * @param {string} id HTML element ID to create the visualization in.
+ * @param {{width: number; height: number; innerWidth: number; innerHeight: number;}} chartDims
+ *    Given dimensions for the chart (generally will be calculated dynamically)
+ * @param {{top: number; right: number; bottom: number; left: number;}} margins
+ *    Given margins for top, right, bottom, and left for the chart
+ */
 function create_barchart(rawData, id, chartDims, margins) {
+  // Select svg and initialize viewbox and configurations
   const svg = d3.select(id);
   svg
     .attr("viewBox", `0 0 ${chartDims.bar.width} ${chartDims.bar.height}`)
@@ -85,7 +96,7 @@ function create_barchart(rawData, id, chartDims, margins) {
     .text("Average Pollution Burden");
 
   // Draw bars
-  const rect = window.bars = barSvg
+  const rect = (window.bars = barSvg
     .append("g")
     .classed("mark", true)
     .selectAll("rect")
@@ -102,7 +113,7 @@ function create_barchart(rawData, id, chartDims, margins) {
     )
     .style("fill", "#04787e")
     .attr("stroke", "black")
-    .attr("stroke-width", 0.5);
+    .attr("stroke-width", 0.5));
 
   // Bar tooltips
   rect
@@ -111,23 +122,3 @@ function create_barchart(rawData, id, chartDims, margins) {
       (d) => `County: ${d.county}\nPollution Burden: ${d.Pollution_Burden}`,
     );
 }
-window.updateBar = function(step) {
-
-  if (!window.bars) return;
-
-  if (step === 1) {
-    window.bars
-      .transition()
-      .duration(600)
-      .style("fill", '#04787e')
-      .attr("opacity", 0.7);
-  }
-
-  if (step === 2) {
-    window.bars
-      .transition()
-      .duration(600)
-      .style("fill", "#0F766E")
-      .attr("opacity", 1);
-  }
-};
