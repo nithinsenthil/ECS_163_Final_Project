@@ -167,7 +167,7 @@ function create_choropleth(rawData, id, chartDims, margins) {
     .parallels([37 + 4 / 60, 38 + 26 / 60])
     .rotate([120 + 30 / 60], 0)
     .fitSize(
-      [chartDims.chloropleth.innerWidth, chartDims.chloropleth.innerHeight],
+      [chartDims.choropleth.innerWidth, chartDims.choropleth.innerHeight],
       landArea,
     );
 
@@ -195,19 +195,19 @@ function create_choropleth(rawData, id, chartDims, margins) {
     .attr("viewBox", `0 0 ${chartDims.bar.width} ${chartDims.bar.height}`)
     .attr("preserveAspectRatio", "xMidYMid meet");
 
-  const chloroplethSvg = svg.append("g");
+  const choroplethSvg = svg.append("g");
 
   // background
-  chloroplethSvg
+  choroplethSvg
     .append("rect")
-    .attr("width", chartDims.chloropleth.width)
-    .attr("height", chartDims.chloropleth.height)
+    .attr("width", chartDims.choropleth.width)
+    .attr("height", chartDims.choropleth.height)
     .attr("x", 0)
     .attr("y", 0)
     .attr("fill", "white");
 
   // group for all map layers
-  const g = chloroplethSvg.append("g").attr("id", "map-layers");
+  const g = choroplethSvg.append("g").attr("id", "map-layers");
 
   // "land" from merged counties
   const land = g
@@ -226,9 +226,9 @@ function create_choropleth(rawData, id, chartDims, margins) {
   drawCounties(selected);
 
   // Create radio button group, used to toggle between variables
-  const radioGroup = chloroplethSvg
+  const radioGroup = choroplethSvg
     .append("g")
-    .attr("transform", `translate(20, ${chartDims.chloropleth.height - 150})`);
+    .attr("transform", `translate(20, ${chartDims.choropleth.height - 150})`);
 
   // Create items within the radio button group
   // Items have `click` event handlers
