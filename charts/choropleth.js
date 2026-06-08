@@ -1,5 +1,13 @@
 const colodr = d3.scaleLinear().domain([0, 2000]).range(["#e0f2fe", "#0369a1"]);
 
+const colorRanges = {
+  "Pollution Burden": ["#E6F4EA", "#081C15"],
+  Pesticides: ["#c8d7cd", "#081C15"],
+  Lead: ["#E6F4EA", "#081C15"],
+  Asthma: ["#FFF7ED", "#7C2D12"],
+  Poverty: ["#ede1ff", "#3b127c"],
+};
+
 /**
  * Given a value and data type, calculate the corresponding color to use
  * for a county in the choropleth chart.
@@ -13,27 +21,20 @@ function color(value, dataType) {
   const pollutionBurdenColor = d3
     .scaleLinear()
     .domain([20, 55])
-    .range(["#E6F4EA", "#081C15"]);
+    .range(colorRanges["Pollution Burden"]);
   const pesticideColor = d3
     .scaleLinear()
     .domain([0, 4250])
-    .range(["#c8d7cd", "#081C15"]);
-  const leadColor = d3
-    .scaleLinear()
-    .domain([20, 65])
-    .range(["#E6F4EA", "#081C15"]);
+    .range(colorRanges.Pesticides);
+  const leadColor = d3.scaleLinear().domain([20, 65]).range(colorRanges.Lead);
   const asthmaColor = d3
     .scaleLinear()
     .domain([20, 110])
-    .range(["#FFF7ED", "#7C2D12"]);
-  const lowBirthWeightColor = d3
-    .scaleLinear()
-    .domain([0, 10])
-    .range(["#FFF7ED", "#7C2D12"]);
+    .range(colorRanges.Asthma);
   const povertyColor = d3
     .scaleLinear()
     .domain([15, 50])
-    .range(["#ede1ff", "#3b127c"]);
+    .range(colorRanges.Poverty);
 
   switch (dataType) {
     case "Pollution Burden":
@@ -44,8 +45,6 @@ function color(value, dataType) {
       return leadColor(value);
     case "Asthma":
       return asthmaColor(value);
-    case "Low Birth Weight":
-      return lowBirthWeightColor(value);
     case "Poverty":
       return povertyColor(value);
   }
@@ -225,6 +224,56 @@ function create_choropleth(rawData, id, chartDims, margins) {
   // Draw counties
   drawCounties(selected);
 
+  // Create legend for chart
+  const legendGroup = choroplethSvg
+    .append("g")
+    .attr("transform", `translate(${chartDims.choropleth.width - 200}, 0)`)
+    .style("border", "1px solid blue");
+
+  // Create label that indicates "Legend"
+  const legendLabel = legendGroup
+    .append("text")
+    .attr("anchor", "middle")
+    .attr("x", 0)
+    .attr("y", 40)
+    .text("Legend");
+
+  // Add color square for first item in legend
+  // Lighter square for lower burden
+  legendGroup
+    .append("rect")
+    .attr("id", "lighter-square")
+    .attr("transform", "translate(0, 50)")
+    .attr("width", 10)
+    .attr("height", 10)
+    .style("fill", colorRanges[selected][0])
+    .style("stroke", "black");
+
+  // Add label for lighter square in legend
+  legendGroup
+    .append("text")
+    .attr("transform", "translate(16, 59)")
+    .text("Lower burden (lighter) to")
+    .attr("font-size", 12);
+
+  // Add color square for first item in legend
+  // Darker square for higher burden
+  legendGroup
+    .append("rect")
+    .attr("id", "darker-square")
+    .attr("transform", "translate(0, 66)")
+    .attr("width", 10)
+    .attr("height", 10)
+    .style("fill", colorRanges[selected][1])
+    .style("stroke", "black");
+
+  // Add label for darker square in legend
+  legendGroup
+    .append("text")
+    .attr("transform", "translate(16, 74)")
+    .text("Higher burden (darker)")
+    .attr("font-size", 12);
+
   // Create radio button group, used to toggle between variables
   const radioGroup = choroplethSvg
     .append("g")
@@ -243,6 +292,12 @@ function create_choropleth(rawData, id, chartDims, margins) {
     .on("click", function (event, d) {
       selected = d;
       updateRadios();
+
+      const lighterLegendSquare = d3.select("#lighter-square");
+      lighterLegendSquare.style("fill", colorRanges[selected][0]);
+
+      const darkerLegendSquare = d3.select("#darker-square");
+      darkerLegendSquare.style("fill", colorRanges[selected][1])
     });
 
   // Outer ring
