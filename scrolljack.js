@@ -1,3 +1,6 @@
+let currentSection = 0;
+const scrollButton = document.getElementById("scroll-button");
+
 /**
  * Add event listener to initiate opacity and position animations.
  * The result lets the content on the page be "scrolljacked" to animate
@@ -26,8 +29,26 @@ window.addEventListener("scroll", function () {
 
     // Currently at this section. Make it visible and place it on the page
     else {
+      currentSection = target;
       element.style.opacity = "1";
       element.style.transform = "translateY(0)";
     }
   }
+
+  // Hide/show the scroll button conditionally
+  if (currentSection === 4) {
+    scrollButton.style.display = "none";
+  } else {
+    scrollButton.style.display = "block";
+  }
+});
+
+/**
+ * When the scroll button is clicked, calculate the position of the next section
+ * and jump the scroll to it.
+ */
+scrollButton.addEventListener("click", () => {
+  const nextSection = currentSection + 1;
+  const nextScrollAmount = nextSection * 0.25 * window.innerHeight;
+  window.scrollTo(0, nextScrollAmount);
 });
