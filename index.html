@@ -7,10 +7,11 @@
     <title>Final Project</title>
   </head>
   <body>
-    <div class="section">
+<div class="contents">    
+    <div class="section" id="section-1">
       <h1>Environmental Inequality in California</h1>
     </div>
-    <div class="section">
+    <div class="section" id="section-2">
       <h2>
         Where do pollution and health burdens overlap across California
         counties?
@@ -21,7 +22,6 @@
         but environmental burden does not affect every county in the state the same way. 
         Some counties face higher exposure to pollution-related factors, may make 
         communities more vulnerable to long-term environmental stress.
-      
       </p>
       <p>
         Monterey County is located along the pacific coastline and is well known for its marine life, scenery, and agriculture.
@@ -37,12 +37,13 @@
         Pollution burden³, lead exposure, asthma, and geography each tell part of the story. 
         When viewed together, they help show how environmental inequality can take shape through overlapping environmental and health conditions.
       </p>
+    </div>
+    <div class="section" id="section-3">
       <h2>Which counties carry the highest pollution burden?</h2>
       <p>
         Pollution burden scores are not evenly distributed across California. Some counties across California carry noticeably higher average pollution burden³ scores, while others fall lower on the scale. These differences in counties pollution burden scores reflect how exposure to pollution-related factors, including factors such as air pollution, pesticide exposure, traffic pollution, water quality, and other environmental conditions vary across the state.
         In the bar chart below, each county is represented by an individual bar. The height shows the county’s average pollution burden³ score. Counties with higher bars experience higher average pollution burden, while counties with lower bars experience lower average pollution burden.
         This gives a broad sense of where pollution burden is more concentrated before moving into the social conditions that may overlap with the environmental challenges they face. 
-
       </p>
       <div class="visWrapper">
         <svg id="bar-svg" class="chart"></svg>
@@ -54,14 +55,13 @@
         burden overlaps with health concerns.
       </p>
     </div>
-    <div class="section">
+    <div class="section" id="section-4">
       <h2>Do pollution and health burdens appear together?</h2>
       <p>
-      Environmental inequality also has a health component to it.
+        Environmental inequality also has a health component to it.
       Pollution burden is only one part of the story. Environmental exposure can overlap with health concerns, especially in communities where people may already face higher risks from pollution-related conditions. Lead exposure and asthma are two important health-related indicators because they show how environmental conditions may connect to physical health burdens.
       The scatterplot below compares lead exposure with asthma rates across California counties. Each point represents one county. Counties positioned farther to the right have higher lead exposure, while counties positioned higher on the graph have higher asthma rates.
       When lead exposure and asthma rates appear high in the same county, it suggests that environmental and health burdens may be overlapping. This does not prove that lead exposure directly causes asthma, but it helps reveal where multiple concerns may be concentrated at the same time.
-
       </p>
       <div class="visWrapper">
         <svg id="scatter-svg" class="chart"></svg>
@@ -73,7 +73,7 @@
         burdens are distributed across the state.
       </p>
     </div>
-    <div class="section">
+    <div class="section" id="section-5">
       <h2>Where are these burdens located?</h2>
       <p>
         County-level patterns become clearer when they are placed back onto the map of California. Pollution, health, and socioeconomic indicators may appear more concentrated in certain regions, or more unevenly across the state.
@@ -107,21 +107,21 @@
 
     </div>
 
-      
-    
 
 
     <div id="bar-tooltip">
-      <p id="bar-tooltip-text"></p>
-    </div>
-
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://unpkg.com/topojson@3"></script>
-    <script src="data/california_06_counties.js"></script>
-    <script src="charts/choropleth.js"></script>
-    <script src="charts/barchart.js"></script>
-    <script src="charts/scatterplot.js"></script>
-    <script src="main.js"></script>
-    <script></script>
-  </body>
-</html>
+        <p id="bar-tooltip-text"></p>
+      </div>
+  
+      <script src="https://d3js.org/d3.v7.min.js"></script>
+      <script src="https://unpkg.com/topojson@3"></script>
+      <script src="data/california_06_counties.js"></script>
+      <script src="charts/choropleth.js"></script>
+      <script src="charts/barchart.js"></script>
+      <script src="charts/scatterplot.js"></script>
+      <script src="scrolljack.js"></script>
+      <script src="main.js"></script>
+      <script></script>
+    </body>
+  </html>
+  
