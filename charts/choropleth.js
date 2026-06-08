@@ -17,7 +17,7 @@ function color(value, dataType) {
   const pesticideColor = d3
     .scaleLinear()
     .domain([0, 4250])
-    .range(["#E6F4EA", "#081C15"]);
+    .range(["#c8d7cd", "#081C15"]);
   const leadColor = d3
     .scaleLinear()
     .domain([20, 65])
@@ -204,7 +204,7 @@ function create_choropleth(rawData, id, chartDims, margins) {
     .attr("height", chartDims.choropleth.height)
     .attr("x", 0)
     .attr("y", 0)
-    .attr("fill", "white");
+    .attr("fill", "none");
 
   // group for all map layers
   const g = choroplethSvg.append("g").attr("id", "map-layers");
