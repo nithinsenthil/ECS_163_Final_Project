@@ -42,14 +42,17 @@ function getWrapperDims(selector, margins) {
 const chartDims = {
   bar: getWrapperDims("#bar-svg", barChartMargins),
   scatter: getWrapperDims("#scatter-svg", margins),
-  chloropleth: getWrapperDims("#chloropleth-svg", margins),
+  choropleth: getWrapperDims("#choropleth-svg", margins),
 };
 
 /**
  * Process data from included SVG and create charts
  */
 d3.csv("data/calenviroscreen.csv").then((rawData) => {
-  create_choropleth(rawData, "#chloropleth-svg", chartDims, margins);
+  console.log("rawData", rawData);
+
+  create_choropleth(rawData, "#choropleth-svg", chartDims, margins);
+
   create_barchart(rawData, "#bar-svg", chartDims, margins);
   create_scatterplot(rawData, "#scatter-svg", chartDims, margins);
 });

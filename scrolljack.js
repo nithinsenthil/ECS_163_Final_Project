@@ -8,9 +8,9 @@ window.addEventListener("scroll", function () {
   const scrollAmount = window.scrollY / window.innerHeight;
 
   // Iterate over all 5 sections
-  for (let target of Array.from({ length: 5 }, (_, idx) => idx)) {
+  for (let target of Array.from({ length: 6 }, (_, idx) => idx)) {
     const element = document.getElementById(`section-${target + 1}`);
-    const dist = target - 4 * scrollAmount;
+    const dist = target - 5 * scrollAmount;
 
     // Didn't get to this section yet, place it below the page
     if (dist > 0.5) {
