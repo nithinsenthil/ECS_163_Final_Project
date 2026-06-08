@@ -73,7 +73,7 @@ body {
 
 #scroll-button {
   position: absolute;
-  bottom: 0;
+  top: calc(100vh - 160px);
   left: 50%;
   transform: translateX(-50%);
 

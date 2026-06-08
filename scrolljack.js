@@ -2,12 +2,11 @@ let currentSection = 0;
 const scrollButton = document.getElementById("scroll-button");
 
 /**
- * Add event listener to initiate opacity and position animations.
- * The result lets the content on the page be "scrolljacked" to animate
- * in and out of the center of page, depending on the scroll distance the user
- * is at.
+ * Based on the current scroll position,
+ * calculate which sections to show or not show and modify section opacities/positions.
+ * Also hide/show the scroll button conditionally.
  */
-window.addEventListener("scroll", function () {
+function scrollEffect() {
   const scrollAmount = window.scrollY / window.innerHeight;
 
   // Iterate over all 5 sections
@@ -41,7 +40,20 @@ window.addEventListener("scroll", function () {
   } else {
     scrollButton.style.display = "block";
   }
-});
+}
+
+// Run scrollEffect on script load
+// This ensures if the user refreshes halfway through the page,
+// the correct content will be loaded in.
+scrollEffect();
+
+/**
+ * Add event listener to initiate opacity and position animations.
+ * The result lets the content on the page be "scrolljacked" to animate
+ * in and out of the center of page, depending on the scroll distance the user
+ * is at.
+ */
+window.addEventListener("scroll", scrollEffect);
 
 /**
  * When the scroll button is clicked, calculate the position of the next section
@@ -49,6 +61,6 @@ window.addEventListener("scroll", function () {
  */
 scrollButton.addEventListener("click", () => {
   const nextSection = currentSection + 1;
-  const nextScrollAmount = nextSection * 0.25 * window.innerHeight;
+  const nextScrollAmount = nextSection * 0.2 * window.innerHeight;
   window.scrollTo(0, nextScrollAmount);
 });
