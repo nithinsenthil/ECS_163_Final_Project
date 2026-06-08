@@ -1,4 +1,15 @@
+/**
+ * Create the scatterplot for the page using d3.
+ *
+ * @param {any} rawData Data parsed by d3.csv from the dataset.
+ * @param {string} id HTML element ID to create the visualization in.
+ * @param {{width: number; height: number; innerWidth: number; innerHeight: number;}} chartDims
+ *    Given dimensions for the chart (generally will be calculated dynamically)
+ * @param {{top: number; right: number; bottom: number; left: number;}} margins
+ *    Given margins for top, right, bottom, and left for the chart
+ */
 function create_scatterplot(rawData, id, chartDims, margins) {
+  // Select svg and initialize viewbox and configurations
   const svg = d3.select(id);
   svg
     .attr("viewBox", `0 0 ${chartDims.bar.width} ${chartDims.bar.height}`)
@@ -6,20 +17,25 @@ function create_scatterplot(rawData, id, chartDims, margins) {
 
   const scatterSvg = svg.append("g");
 
+  /**
+   *
+   * @param {number} v Numerical value of a single datapoint
+   * @returns A cleaned version of the value provided, or null if the provided value was invalid.
+   */
   const clean = (v) => {
     if (v == null) return null;
     const n = +String(v).trim();
     return isNaN(n) ? null : n;
   };
 
+  // Clean, trim, and filter data appropriately
   const scatterData = rawData
     .map((d) => ({
       County: d.county.trim(),
       Lead: clean(d.Lead),
       Asthma: clean(d.Asthma),
     }))
-    .filter((d) => d.Lead != null && d.Asthma != null)
-    // .map((d) => ({ ...d, Education: 100 - d.Education }));
+    .filter((d) => d.Lead != null && d.Asthma != null);
 
   // Plot Title
   scatterSvg
@@ -92,7 +108,7 @@ function create_scatterplot(rawData, id, chartDims, margins) {
 
   // Draw circles
   const r = 3;
-  const circles = window.circles = scatterSvg
+  const circles = (window.circles = scatterSvg
     .append("g")
     .classed("mark", true)
     .selectAll("circle")
@@ -105,34 +121,20 @@ function create_scatterplot(rawData, id, chartDims, margins) {
     .style("fill", "#0F766E")
     .style("fill-opacity", 0.9)
     .style("stroke", "#D1D5DB")
-    .style("stroke-width", 0.8);
+    .style("stroke-width", 0.8));
 
   // Circle tooltips
   circles
     .append("title")
-    .text(
-      (d) =>
-        `County: ${d.County}\nLead: ${d.Lead}\nAsthma ${d.Asthma}`,
-    );
+    .text((d) => `County: ${d.County}\nLead: ${d.Lead}\nAsthma ${d.Asthma}`);
 
   circles
+    // On mouseover, highlight and raise the circle to make it more visible
     .on("mouseover", function () {
       d3.select(this).raise().attr("r", 6).style("fill", "#FACC15");
     })
+    // When the mouse leaves, restore the circle's original styling
     .on("mouseout", function () {
       d3.select(this).attr("r", 3).style("fill", "#0F766E");
     });
 }
-window.updateScatter = function(step) {
-
-  if (!window.circles) {
-    console.log("No circles");
-    return;
-  }
-  console.log("Updating scatter:", step);
-  window.circles
-    .transition()
-    .duration(600)
-    .attr("r", 6)
-    .style("fill", "#0F766E");
-};
