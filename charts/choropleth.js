@@ -224,11 +224,13 @@ function create_choropleth(rawData, id, chartDims, margins) {
   // Draw counties
   drawCounties(selected);
 
+  // Create legend for chart
   const legendGroup = choroplethSvg
     .append("g")
     .attr("transform", `translate(${chartDims.choropleth.width - 200}, 0)`)
     .style("border", "1px solid blue");
 
+  // Create label that indicates "Legend"
   const legendLabel = legendGroup
     .append("text")
     .attr("anchor", "middle")
@@ -236,6 +238,8 @@ function create_choropleth(rawData, id, chartDims, margins) {
     .attr("y", 40)
     .text("Legend");
 
+  // Add color square for first item in legend
+  // Lighter square for lower burden
   legendGroup
     .append("rect")
     .attr("id", "lighter-square")
@@ -245,12 +249,15 @@ function create_choropleth(rawData, id, chartDims, margins) {
     .style("fill", colorRanges[selected][0])
     .style("stroke", "black");
 
+  // Add label for lighter square in legend
   legendGroup
     .append("text")
     .attr("transform", "translate(16, 59)")
     .text("Lower burden (lighter) to")
     .attr("font-size", 12);
 
+  // Add color square for first item in legend
+  // Darker square for higher burden
   legendGroup
     .append("rect")
     .attr("id", "darker-square")
@@ -260,6 +267,7 @@ function create_choropleth(rawData, id, chartDims, margins) {
     .style("fill", colorRanges[selected][1])
     .style("stroke", "black");
 
+  // Add label for darker square in legend
   legendGroup
     .append("text")
     .attr("transform", "translate(16, 74)")
