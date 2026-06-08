@@ -61,6 +61,6 @@ window.addEventListener("scroll", scrollEffect);
  */
 scrollButton.addEventListener("click", () => {
   const nextSection = currentSection + 1;
-  const nextScrollAmount = nextSection * 0.25 * window.innerHeight;
+  const nextScrollAmount = nextSection * 0.2 * window.innerHeight;
   window.scrollTo(0, nextScrollAmount);
 });
